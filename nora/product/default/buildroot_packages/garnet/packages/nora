@@ -1,0 +1,16 @@
+{
+    "imports": [
+        "garnet/packages/venus-hee",
+        "garnet/packages/nebula/config/sos_qemu",
+        "garnet/packages/nebula/prod/qemu_drivers",
+        "garnet/packages/nebula/prod/filesystems",
+        "garnet/packages/prod/guest_tool"
+    ],
+    "packages": {
+        "block": "//garnet/drivers/block/block",
+        "gpt": "//garnet/drivers/block/gpt",
+        "guest_memory_allocator": "//garnet/drivers/misc/guest_memory_allocator",
+        "platform": "//garnet/drivers/bus/platform",
+        "ramdisk": "//garnet/drivers/block/ramdisk"
+    }
+}

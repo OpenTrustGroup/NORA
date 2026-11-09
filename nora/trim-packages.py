@@ -3,7 +3,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 #
-# Take open-ddk/trim.txt's packages out of a package root (garnet/packages
+# Take nora/trim.txt's packages out of a package root (garnet/packages
 # with a product overlay over it): every package file's "packages" loses
 # them, and an app list a resource installs (data/grt_loader/apps.config)
 # loses their binaries, written as a copy under OUT that the resource then

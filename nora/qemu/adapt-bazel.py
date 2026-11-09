@@ -7,9 +7,9 @@
 # only. bazel/ree/ is a farm of symlinks into build/bazel/ree/ (build/
 # bazel_symlink.sh); this replaces two of its links with edited copies and
 # leaves build/ as it is:
-#   WORKSPACE    rules_nbl from open-ddk/qemu/rules_nbl/, not GRT's Gerrit;
+#   WORKSPACE    rules_nbl from nora/qemu/rules_nbl/, not GRT's Gerrit;
 #                no linux 4.9, 4.19 or 5.4 tree; gRPC's extra dependencies
-#                from open-ddk/qemu/bazel/, which names the Go SDK by its
+#                from nora/qemu/bazel/, which names the Go SDK by its
 #                checksum (rules_go would otherwise ask golang.org for its
 #                list of releases every time, which no cache can answer)
 #   BUILD.bazel  gen_init_cpio from linux 6.6; no images of the old kernels;
@@ -49,11 +49,11 @@ edit('WORKSPACE', [
     ('rules_nbl from Gerrit',
      r'^git_repository\(\n    name = "io_bazel_rules_nbl",\n.*?^\)\n',
      'local_repository(\n    name = "io_bazel_rules_nbl",\n'
-     '    path = "../../open-ddk/qemu/rules_nbl",\n)\n'),
+     '    path = "../../nora/qemu/rules_nbl",\n)\n'),
     drop_repo('linux_4.9'), drop_repo('linux_4.19'), drop_repo('linux_5.4'),
     ('gRPC\'s extra dependencies',
      r'^load\("@com_github_grpc_grpc//bazel:grpc_extra_deps\.bzl", "grpc_extra_deps"\)\n+grpc_extra_deps\(\)\n',
-     'local_repository(\n    name = "open_ddk_qemu",\n    path = "../../open-ddk/qemu/bazel",\n)\n\n'
+     'local_repository(\n    name = "open_ddk_qemu",\n    path = "../../nora/qemu/bazel",\n)\n\n'
      'load("@open_ddk_qemu//:grpc_extra_deps.bzl", "grpc_extra_deps_offline")\n\n'
      'grpc_extra_deps_offline()\n'),
 ])

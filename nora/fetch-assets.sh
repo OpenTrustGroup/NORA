@@ -4,10 +4,11 @@
 # found in the LICENSE file.
 #
 # Fetch and unpack the binary parts that are not kept in git (toolchains,
-# prebuilt zircon with the part of its source the builds read, bazel and its
-# downloads), checked against open-ddk/ASSETS.sha256.
+# the prebuilt TEE image, bazel and its downloads), checked against
+# nora/ASSETS.sha256. They are open-ddk's release assets, less its prebuilt
+# zircon.
 #
-#   open-ddk/fetch-assets.sh [--from DIR_OR_URL]
+#   nora/fetch-assets.sh [--from DIR_OR_URL]
 #
 # By default they come from the GitHub releases of the repository this is
 # checked out from: <origin>/releases/download/<release>/<file>, the release
@@ -16,7 +17,7 @@
 # <release>"). --from takes a local directory or a base URL with every file.
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-LIST="$ROOT/open-ddk/ASSETS.sha256"
+LIST="$ROOT/nora/ASSETS.sha256"
 RELEASE="$(sed -n 's/^# ASSETS_RELEASE=//p' "$LIST")"
 FROM=""; BASE=""
 [ "${1:-}" = --from ] && FROM="$2"
@@ -36,18 +37,15 @@ if [ -z "$FROM" ]; then
   esac
 fi
 echo "assets from $FROM"
-# zircon: where zircon/ is zircon's whole source already (its makefile, and
-# not open-ddk's prebuilt one), the builds build it (open-ddk/build-zircon.sh):
-# open-ddk's prebuilt zircon, its source subset and kernels, is not put in
-SOURCE=; [ -f "$ROOT/zircon/makefile" ] && [ ! -f "$ROOT/zircon/OPEN-DDK-PREBUILT" ] && SOURCE=1
-[ -z "$SOURCE" ] || echo "zircon/ is zircon's source: not putting open-ddk's prebuilt zircon in"
 DL="$ROOT/.assets"; mkdir -p "$DL"
 grep -v '^#' "$LIST" | while read -r sum name; do
-  # (zircon's source needs its whole toolchains, the prebuilt one a part)
+  # zircon/ is zircon's whole source, a project of the manifest, which the
+  # builds build (nora/build-zircon.sh): its whole toolchains, and no
+  # prebuilt zircon nor the part of the toolchains that one needs
   case $name in
-    open-ddk-zircon-*) [ -z "$SOURCE" ] || continue ;;
-    open-ddk-toolchain-clang-gcc-full-*) [ -n "$SOURCE" ] || continue ;;
-    open-ddk-toolchain-clang-gcc-*) [ -z "$SOURCE" ] || continue ;;
+    open-ddk-zircon-*) continue ;;
+    open-ddk-toolchain-clang-gcc-full-*) ;;
+    open-ddk-toolchain-clang-gcc-*) continue ;;
   esac
   f="$DL/$name"
   if [ ! -f "$f" ] || ! echo "$sum  $f" | sha256sum -c --status; then

@@ -5,8 +5,8 @@
 # open-ddk does not carry the nebula SDK (garnet/public/nebula_sdk). What its
 # builds load of it resolves to nothing: //build/bootfs's nbl_tsm_server
 # (TEE-era, not built) depends on nebula_export, and the product's package
-# lists name sdk (left out of the build). prepare.sh puts this file where GN
-# looks when the SDK's own BUILD.gn is not there (build/secondary/); a
+# lists name sdk (left out of the build). GN finds this file in NORA's
+# secondary tree (nora/gn-stubs/) when the SDK's own BUILD.gn is not there; a
 # checkout with the SDK uses its own.
 
 group("nebula_export") {
