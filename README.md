@@ -1,3 +1,11 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/nora-logo-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="docs/images/nora-logo-light.png">
+    <img alt="NORA: Nebula OS Reference Architecture" src="docs/images/nora-logo-light.png" width="560">
+  </picture>
+</p>
+
 # NORA
 
 NORA (Nebula OS Reference Architecture): the open sources of the Nebula
@@ -51,6 +59,7 @@ windows rather than terminal windows.
 ## What is in here
 
 - `manifest/NORA`: the projects, for jiri.
+- `docs/images/`: the NORA logo, for GitHub's dark and light themes.
 - `nora/`: the build (`build.sh`, which runs `build-zircon.sh` first),
   NORA's packages (`product/default/`), the assets (`fetch-assets.sh`,
   `ASSETS.sha256`), and what the GN build reads that NORA does not carry
