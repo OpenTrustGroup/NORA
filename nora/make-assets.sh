@@ -115,7 +115,8 @@ pack nora-gcc-linaro-7.5.0-2019.12.tar.xz "$W/l" prebuilts/gcc-linaro-7.5.0-2019
 
 # bazel and its repository cache: analysing the targets nora/build.sh
 # builds, in fresh output bases with an empty cache, downloads every
-# archive the workspaces pin.
+# archive the workspaces pin. (No bazel-* links: the workspaces' own point
+# at the checkout's build.)
 echo "== bazel"
 B="$W/bz/out/nora-bazel"
 mkdir -p "$B/bazelisk/bin/bazelbuild"
@@ -141,7 +142,7 @@ chmod 755 "$B/bazelisk/bin/bazelbuild/bazel-$BAZEL_VERSION-linux-x86_64"
       host) targets=(//:qemu //:soc_term) ;;
     esac
     (cd "bazel/$ws" &&
-     bazelisk --output_base="$W/ob-$ws" build --nobuild \
+     bazelisk --output_base="$W/ob-$ws" build --nobuild --symlink_prefix=/ \
        --repository_cache="$B/repos" "${targets[@]}" &&
      bazelisk --output_base="$W/ob-$ws" shutdown)
   done
