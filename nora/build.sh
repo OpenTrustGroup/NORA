@@ -6,8 +6,8 @@
 # Build what `fx run-venus` boots in QEMU: the hypervisor image (venus-hee) on
 # zircon built from source, linux 6.6 and its root file system, TF-A, and QEMU
 # itself. NORA has no TEE: TF-A is built without one (--tee none). No
-# network: bazel and what its workspaces
-# download come from the release assets (out/open-ddk-bazel/).
+# network: bazel and what its workspaces download come from the release
+# assets (out/nora-bazel/).
 #
 #   nora/build.sh
 #
@@ -83,7 +83,7 @@ FUCHSIA_DIR="$ROOT" source build/bazel_symlink.sh
 python3 nora/qemu/adapt-bazel.py "$ROOT"
 
 # bazel itself and every file its workspaces download, from the assets
-B="$ROOT/out/open-ddk-bazel"
+B="$ROOT/out/nora-bazel"
 export BAZELISK_HOME="$B/bazelisk"
 CACHE=(--repository_cache="$B/repos")
 # no bazel server left behind

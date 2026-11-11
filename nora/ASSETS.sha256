@@ -1,0 +1,7 @@
+# ASSETS_RELEASE=assets-1
+# Made by nora/make-assets.sh; each file's sources are listed there.
+35bf099b9ae9f53ba11eca54fc46f106cd08faa0329c7f40fa6d564f5ebb8fa9  nora-bazel.tar.xz
+3898160f23cdd90797d486be9b6138141debbad86f01675d1c17c143d671b4e2  nora-buildtools-linux-x64.tar.xz
+b6e3418470f6e57505c6a85ab5d7cd7dc4774a8763cb21523e9b7d03b8ae2efb  nora-gcc-linaro-7.5.0-2019.12.tar.xz
+4e8ab6c17bc12debb4377d54672e2a46f622e759efaa208f07c8acf10bb97b26  nora-qemu-subprojects.tar.xz
+214a5a486f666179a742021c4564dd4b85ed509ec961ac62dfd617b54ec3a8a1  nora-zircon-toolchains-linux-x64.tar.xz

@@ -4,9 +4,9 @@
 # found in the LICENSE file.
 #
 # Fetch and unpack the binary parts that are not kept in git (toolchains,
-# the prebuilt TEE image, bazel and its downloads), checked against
-# nora/ASSETS.sha256. They are open-ddk's release assets, less its prebuilt
-# zircon.
+# bazel and its downloads, QEMU's subprojects), checked against
+# nora/ASSETS.sha256. They are NORA's release assets, which
+# nora/make-assets.sh makes from where their makers publish them.
 #
 #   nora/fetch-assets.sh [--from DIR_OR_URL]
 #
@@ -39,14 +39,6 @@ fi
 echo "assets from $FROM"
 DL="$ROOT/.assets"; mkdir -p "$DL"
 grep -v '^#' "$LIST" | while read -r sum name; do
-  # zircon/ is zircon's whole source, a project of the manifest, which the
-  # builds build (nora/build-zircon.sh): its whole toolchains, and no
-  # prebuilt zircon nor the part of the toolchains that one needs
-  case $name in
-    open-ddk-zircon-*) continue ;;
-    open-ddk-toolchain-clang-gcc-full-*) ;;
-    open-ddk-toolchain-clang-gcc-*) continue ;;
-  esac
   f="$DL/$name"
   if [ ! -f "$f" ] || ! echo "$sum  $f" | sha256sum -c --status; then
     # (a file of an earlier release: that release's)

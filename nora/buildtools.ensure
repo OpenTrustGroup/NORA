@@ -1,0 +1,22 @@
+# Copyright 2026 Open Trust Group. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# The host tools the build uses (buildtools/linux-x64/), from CIPD, at the
+# versions buildtools/fuchsia.ensure pins. clang is the one upstream pinned
+# for this tree.
+
+$VerifiedPlatform linux-amd64
+
+infra/ninja/${platform} version:1.8.2
+infra/tools/gn/${platform} gn_version:547759
+fuchsia/tools/godepfile/${platform} git_revision:6922d7833617841e853a0be52a285f6cd07a0a10
+
+@Subdir clang
+fuchsia/clang/${platform} git_revision:0916ed75b2698f7ec638ea19b477352b72263e8a
+
+@Subdir go
+fuchsia/go/${platform} git_revision:b8bd7d94a2ae6c80ab8b6ed5900d3eeba8a777c3
+
+@Subdir sysroot
+fuchsia/sysroot/${os=linux}-${arch} git_revision:a96053c799a0f1ad0b7e8ab8199edbfa18adcbb6

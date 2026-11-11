@@ -33,7 +33,7 @@ cat > .jiri_manifest <<'EOF'
 </manifest>
 EOF
 jiri update
-nora/fetch-assets.sh   # toolchains, the prebuilt TEE image, bazel's downloads
+nora/fetch-assets.sh   # toolchains, bazel and its downloads, QEMU's subprojects
 ```
 
 `manifest/NORA` follows `main` and, for each fork of upstream and for
@@ -62,6 +62,7 @@ consoles open as tmux windows rather than terminal windows.
 - `docs/images/`: the NORA logo, for GitHub's dark and light themes.
 - `nora/`: the build (`build.sh`, which runs `build-zircon.sh` first),
   NORA's packages (`product/default/`), the assets (`fetch-assets.sh`,
-  `ASSETS.sha256`), what the GN build reads that NORA does not carry
+  `ASSETS.sha256`, and `make-assets.sh`, which makes them from where their
+  makers publish them), what the GN build reads that NORA does not carry
   (`gn-stubs/`), and stand-ins for Trusty's user library, as NORA has no
   TEE (`trusty/`).
