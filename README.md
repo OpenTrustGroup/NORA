@@ -49,12 +49,12 @@ source scripts/env.sh && fx run-venus -z -9 -d
 ```
 
 builds zircon, the hypervisor image, linux 6.6 and its root file system,
-TF-A and QEMU, and boots the hypervisor, which starts the SOS guest. The TEE
-image comes prebuilt with the assets (`--tee none` does not boot yet).
-Besides the assets, the host needs the device-tree compiler, `dtc`
-(Debian and Ubuntu: `device-tree-compiler`), which garnet's build runs.
-In tmux, add `-x` to `fx run-venus`: the serial consoles open as tmux
-windows rather than terminal windows.
+TF-A and QEMU, and boots the hypervisor, which starts the SOS guest. NORA
+has no TEE: TF-A is built without one (`--tee none`) and nothing runs in
+the secure world. Besides the assets, the host needs the device-tree
+compiler, `dtc` (Debian and Ubuntu: `device-tree-compiler`), which
+garnet's build runs. In tmux, add `-x` to `fx run-venus`: the serial
+consoles open as tmux windows rather than terminal windows.
 
 ## What is in here
 

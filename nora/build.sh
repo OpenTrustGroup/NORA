@@ -5,8 +5,8 @@
 #
 # Build what `fx run-venus` boots in QEMU: the hypervisor image (venus-hee) on
 # zircon built from source, linux 6.6 and its root file system, TF-A, and QEMU
-# itself; the TEE image (venus-tee) comes prebuilt with the assets. (At this
-# tag `--tee none` does not boot.) No network: bazel and what its workspaces
+# itself. NORA has no TEE: TF-A is built without one (--tee none). No
+# network: bazel and what its workspaces
 # download come from the release assets (out/open-ddk-bazel/).
 #
 #   nora/build.sh
@@ -51,15 +51,11 @@ cp -r nora/product/default/buildroot_packages/. "$P/"
 python3 nora/trim-packages.py "$P" "$ROOT/out/nora/trimmed"
 python2 nora/product-packages.py --root "$P" --package garnet/packages/nora --out "$Q/nora"
 echo '{ "labels": [ "//build/bootfs:bootdata-combo-qemu-virt" ] }' > "$Q/bootfs"
-# The TEE image is prebuilt (out/venus-tee/arm64/bootdata-combo-qemu-virt.bin,
-# from the assets): only the hypervisor is built.
-[ -f out/venus-tee/arm64/bootdata-combo-qemu-virt.bin ] ||
-  { echo "error: no TEE image (out/venus-tee/arm64/); run nora/fetch-assets.sh" >&2; exit 1; }
 # `fx set-venus venus-hee`, with these package files in place of the
 # project's own: set-venus's `gn gen` loads every package of
 # garnet/packages/venus-hee and build/packages/bootfs, and with them sources
 # NORA does not publish. The same args.gn and .config otherwise (VENUS_TEE:
-# set-venus's --tee, nebula by default).
+# set-venus's --tee; none by default, as NORA has no TEE).
 d=out/venus-hee/arm64
 mkdir -p "$d"; rm -rf out/arm64; ln -s "$ROOT/$d" out/arm64
 {
@@ -74,7 +70,7 @@ mkdir -p "$d"; rm -rf out/arm64; ln -s "$ROOT/$d" out/arm64
 } > "$d/args.gn"
 buildtools/gn gen "$d" --root=. --dotfile="$ROOT/out/nora/dotfile.gn" --check
 (source scripts/devshell/lib/vars.sh && zircon_project=venus-hee variant= &&
- fx-config-write out/arm64 "" linux_6.6 2.10 "${VENUS_TEE:-nebula}" 0)
+ fx-config-write out/arm64 "" linux_6.6 2.10 "${VENUS_TEE:-none}" 0)
 # The combo images' rules do not list the boot shim as an input: rebuild
 # them each time, so that a changed shim reaches them.
 rm -f "$d"/bootdata-combo-qemu-virt*.bin
