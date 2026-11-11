@@ -1,0 +1,13 @@
+# Copyright 2026 Open Trust Group. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+config("rng_config") {
+  include_dirs = [ "//nora/trusty/lib/lib/rng/include" ]
+}
+
+source_set("rng") {
+  sources = [ "//nora/trusty/lib/lib/rng/rng.c" ]
+  public_configs = [ ":rng_config" ]
+  deps = [ "//zircon/trusty/lib/lib/libc-trusty" ]
+}

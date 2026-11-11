@@ -62,5 +62,6 @@ windows rather than terminal windows.
 - `docs/images/`: the NORA logo, for GitHub's dark and light themes.
 - `nora/`: the build (`build.sh`, which runs `build-zircon.sh` first),
   NORA's packages (`product/default/`), the assets (`fetch-assets.sh`,
-  `ASSETS.sha256`), and what the GN build reads that NORA does not carry
-  (`gn-stubs/`).
+  `ASSETS.sha256`), what the GN build reads that NORA does not carry
+  (`gn-stubs/`), and stand-ins for Trusty's user library, as NORA has no
+  TEE (`trusty/`).

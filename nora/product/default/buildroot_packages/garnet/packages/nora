@@ -1,6 +1,12 @@
 {
+    "languages": [
+        "cpp"
+    ],
     "imports": [
-        "garnet/packages/venus-hee",
+        "garnet/packages/config/nora_sysmgr",
+        "garnet/packages/prod/runtime",
+        "garnet/packages/nebula/config/all",
+        "garnet/packages/nebula/prod/all",
         "garnet/packages/nebula/config/sos_qemu",
         "garnet/packages/nebula/prod/qemu_drivers",
         "garnet/packages/nebula/prod/filesystems",

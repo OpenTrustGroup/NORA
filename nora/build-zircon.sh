@@ -13,6 +13,11 @@ set -eo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 source scripts/env.sh
+# Zircon exports the April 2018 libraries and fidlc of its system/legacy,
+# which garnet is written against, in place of its own. local.mk rather
+# than an argument: the Fuchsia build's gn gen runs Zircon's make too.
+grep -qx 'LEGACY_ULIB := 1' zircon/local.mk 2>/dev/null ||
+  echo 'LEGACY_ULIB := 1' >> zircon/local.mk
 # With clang, as GRT's release flow builds zircon: garnet's link needs what
 # clang emits (GCC leaves fbl's placement new out of line).
 Z=scripts/build-zircon.sh; A=(USE_CLANG=true WITH_SYZKALLER=0)

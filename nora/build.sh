@@ -36,15 +36,6 @@ sed 's|^secondary_source = .*|secondary_source = "//nora/gn-stubs/"|' \
   build/gn/dotfile.gn > out/nora/dotfile.gn
 grep -qx 'secondary_source = "//nora/gn-stubs/"' out/nora/dotfile.gn ||
   { echo "error: build/gn/dotfile.gn names no secondary_source" >&2; exit 1; }
-# An imported file has no secondary place: its stub goes where it is
-# imported from, which its project's git then ignores.
-(cd nora/gn-stubs && find . -name '*.gni' | sed 's|^\./||') | while read -r f; do
-  [ ! -e "$f" ] || continue
-  cp "nora/gn-stubs/$f" "$f"
-  top=$(git -C "$(dirname "$f")" rev-parse --show-toplevel)
-  ex=$(git -C "$top" rev-parse --absolute-git-dir)/info/exclude; mkdir -p "$(dirname "$ex")"
-  rel=/$(realpath --relative-to="$top" "$f"); grep -qxF "$rel" "$ex" 2>/dev/null || echo "$rel" >> "$ex"
-done
 
 source scripts/env.sh
 bash nora/build-zircon.sh
@@ -76,6 +67,8 @@ mkdir -p "$d"; rm -rf out/arm64; ln -s "$ROOT/$d" out/arm64
   echo 'zircon_project = "venus-hee"'
   echo 'bootfs_packages = true'
   echo 'with_syzkaller = 0'
+  echo 'nebula_tee_services = false'
+  echo 'zircon_nebula_api = true'
   if [ -n "${CCACHE_DIR:-}" ] && [ -d "$CCACHE_DIR" ]; then echo 'use_ccache = true'; fi
   echo 'fuchsia_packages = [ "out/nora/packages/nora", "out/nora/packages/bootfs" ]'
 } > "$d/args.gn"

@@ -1,0 +1,31 @@
+# Copyright 2026 Open Trust Group. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# NORA has no TEE. garnet reaches Trusty's user library here, at the path of
+# GRT's tree; NORA's stand-in (nora/trusty) answers that there is no Trusty.
+
+declare_args() {
+  # The board that SYS_PLATFORM_GET_PRODUCT_ID reports, one of the BOARD_*
+  # identifiers of pal/platform_defs.h. The default, 1, is QEMU.
+  nora_board_product_id = 1
+}
+
+# Code that uses Trusty names GRT's directories under //zircon/trusty in its
+# own include_dirs too; NORA has them under //nora/trusty, so they come with
+# this config instead.
+config("libc-trusty_config") {
+  include_dirs = [
+    "//nora/trusty/lib/include/user",
+    "//nora/trusty/lk/trusty/include",
+    "//nora/trusty/lk/trusty/include/pal",
+    "//nora/trusty/lk/trusty/include/pal/shared",
+    "//nora/trusty/lk/trusty/include/uapi",
+  ]
+}
+
+source_set("libc-trusty") {
+  sources = [ "//nora/trusty/lib/lib/libc-trusty/trusty.c" ]
+  defines = [ "NORA_BOARD_PRODUCT_ID=$nora_board_product_id" ]
+  public_configs = [ ":libc-trusty_config" ]
+}
