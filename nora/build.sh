@@ -65,6 +65,7 @@ mkdir -p "$d"; rm -rf out/arm64; ln -s "$ROOT/$d" out/arm64
   echo 'with_syzkaller = 0'
   echo 'nebula_tee_services = false'
   echo 'zircon_nebula_api = true'
+  echo 'bootfs_cmdline_vendor = "//vendor/otg"'
   if [ -n "${CCACHE_DIR:-}" ] && [ -d "$CCACHE_DIR" ]; then echo 'use_ccache = true'; fi
   echo 'fuchsia_packages = [ "out/nora/packages/nora", "out/nora/packages/bootfs" ]'
 } > "$d/args.gn"

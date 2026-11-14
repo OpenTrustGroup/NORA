@@ -57,6 +57,11 @@
              remote="https://github.com/OpenTrustGroup/benchmark"
              remotebranch="NORA"
              revision="remotes/origin/NORA"/>
+    <project name="boringssl-gn"
+             path="third_party/boringssl"
+             remote="https://github.com/OpenTrustGroup/boringssl"
+             remotebranch="NORA"
+             revision="remotes/origin/NORA"/>
     <project name="boringssl"
              path="third_party/boringssl/src"
              remote="https://github.com/google/boringssl"
@@ -68,6 +73,11 @@
     <project name="dropbear"
              path="third_party/dropbear"
              remote="https://github.com/OpenTrustGroup/dropbear"
+             remotebranch="NORA"
+             revision="remotes/origin/NORA"/>
+    <project name="fdt"
+             path="third_party/fdt"
+             remote="https://github.com/OpenTrustGroup/fdt"
              remotebranch="NORA"
              revision="remotes/origin/NORA"/>
     <project name="gflags"
@@ -186,4 +196,10 @@
              remotebranch="NORA"
              revision="remotes/origin/NORA"/>
   </projects>
+  <hooks>
+    <!-- fx in .jiri_root/bin, which scripts/env.sh puts on PATH -->
+    <hook name="install-fx"
+          action="devshell/lib/add_symlink_to_bin.sh"
+          project="scripts"/>
+  </hooks>
 </manifest>
