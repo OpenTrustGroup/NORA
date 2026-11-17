@@ -37,9 +37,18 @@ nora/fetch-assets.sh   # toolchains, bazel and its downloads, QEMU's subprojects
 ```
 
 `manifest/NORA` follows `main` and, for each fork of upstream and for
-zircon, its branch `NORA`: `jiri update` brings the latest release. A
-release is this repository's tag and, in each fork and in zircon, the tag
-`NORA-<version>`.
+zircon, its branch `NORA`: `jiri update` brings the latest work. A release
+is this repository's tag and, in each fork and in zircon, the tag
+`NORA-<version>`, and its locked manifest `manifest/NORA-<version>` pins
+every project there: this repository, the forks and zircon at that tag, the
+rest at the commits `manifest/NORA` pins. To check out a release (here
+v2.1.0), import that manifest at the release's tag instead:
+
+```xml
+    <import name="NORA" manifest="manifest/NORA-v2.1.0" root=""
+            remote="https://github.com/OpenTrustGroup/NORA"
+            revision="refs/tags/NORA-v2.1.0"/>
+```
 
 ## Run on QEMU
 
@@ -58,11 +67,13 @@ consoles open as tmux windows rather than terminal windows.
 
 ## What is in here
 
-- `manifest/NORA`: the projects, for jiri.
+- `manifest/NORA`: the projects, for jiri; `manifest/NORA-<version>`: a
+  release's, locked.
 - `docs/images/`: the NORA logo, for GitHub's dark and light themes.
 - `nora/`: the build (`build.sh`, which runs `build-zircon.sh` first),
   NORA's packages (`product/default/`), the assets (`fetch-assets.sh`,
   `ASSETS.sha256`, and `make-assets.sh`, which makes them from where their
   makers publish them), what the GN build reads that NORA does not carry
-  (`gn-stubs/`), and stand-ins for Trusty's user library, as NORA has no
-  TEE (`trusty/`).
+  (`gn-stubs/`), stand-ins for Trusty's user library, as NORA has no
+  TEE (`trusty/`), and what writes a release's locked manifest
+  (`lock-manifest.py`).
